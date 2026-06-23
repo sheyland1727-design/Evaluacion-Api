@@ -18,6 +18,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/cargos/{id}', [CargoController::class, 'update']);
     Route::delete('/cargos/{id}', [CargoController::class, 'destroy']);
 
+    Route::get('/cargos/{id}/funciones', [CargoController::class, 'funciones']);
+
         // CRUD Empleados
     Route::get('/empleados', [EmpleadoController::class, 'index']);
     Route::get('/empleados/{id}', [EmpleadoController::class, 'show']);
@@ -25,11 +27,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/empleados/{id}', [EmpleadoController::class, 'update']);
     Route::delete('/empleados/{id}', [EmpleadoController::class, 'destroy']);
 
+    Route::get('/empleados/{id}/detalle', [EmpleadoController::class, 'detalle']); 
+
+    
     // CRUD Funciones
 Route::get('/funciones', [FuncionCargoController::class, 'index']);
 Route::get('/funciones/{id}', [FuncionCargoController::class, 'show']);
 Route::post('/funciones', [FuncionCargoController::class, 'store']);
 Route::put('/funciones/{id}', [FuncionCargoController::class, 'update']);
 Route::delete('/funciones/{id}', [FuncionCargoController::class, 'destroy']);
+
 
 });

@@ -11,11 +11,26 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('empleados', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
+        
+    Schema::create('empleados', function (Blueprint $table) {
+        $table->id();
+
+        $table->foreignId('cargo_id')
+            ->constrained('cargos')
+            ->cascadeOnDelete();
+
+        $table->string('nombres');
+        $table->string('apellidos');
+        $table->date('fecha_nacimiento');
+        $table->date('fecha_ingreso');
+        $table->decimal('salario', 12, 2);
+        $table->boolean('estado')->default(true);
+
+        $table->timestamps();
+    });
+}
+        
+    
 
     /**
      * Reverse the migrations.

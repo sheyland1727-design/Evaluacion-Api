@@ -1,42 +1,30 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Requests;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\LoginRequest;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Foundation\Http\FormRequest;
 
-class AuthController extends Controller
+class LoginRequest extends FormRequest
 {
-    public function login(LoginRequest $request)
+    public function authorize(): bool
     {
-        $user = User::where('email', $request->email)->first();
-
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json([
-                'message' => 'Credenciales incorrectas.'
-            ], 401);
-        }
-
-        // Eliminar tokens anteriores
-        $user->tokens()->delete();
-
-        // Crear nuevo token
-        $token = $user->createToken('api-token')->plainTextToken;
-
-        return response()->json([
-            'message' => 'Inicio de sesión exitoso.',
-            'token' => $token
-        ], 200);
+        return true;
     }
 
-    public function logout()
+    public function rules(): array
     {
-        auth()->user()->currentAccessToken()->delete();
+        return [
+            'email' => 'required|email',
+            'password' => 'required'
+        ];
+    }
 
-        return response()->json([
-            'message' => 'Sesión cerrada correctamente.'
-        ], 200);
+    public function messages(): array
+    {
+        return [
+            'email.required' => 'El correo es obligatorio.',
+            'email.email' => 'Debe ingresar un correo válido.',
+            'password.required' => 'La contraseña es obligatoria.'
+        ];
     }
 }
