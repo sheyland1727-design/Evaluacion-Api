@@ -44,7 +44,7 @@ git clone https://github.com/sheyland1727-design/Evaluacion-Api.git
 Ingresar a la carpeta del proyecto:
 
 ```bash
-cd Evaluacion-Api
+cd proyecto-api
 ```
 
 ## 2. Instalar dependencias
